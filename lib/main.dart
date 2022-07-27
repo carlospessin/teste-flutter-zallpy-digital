@@ -6,6 +6,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
 
   runApp(
