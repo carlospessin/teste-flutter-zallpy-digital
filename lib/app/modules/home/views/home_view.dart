@@ -133,7 +133,17 @@ class HomeView extends GetView<HomeController> {
                                   vertical: 25,
                                   horizontal: 40,
                                 ),
-                                child: PrincipalCards(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Resumo da atividade',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    PrincipalCards(),
+                                  ],
+                                ),
                               ),
                               Container(
                                 color: Color(0xffF5F5F5),
@@ -150,7 +160,7 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                     SizedBox(width: 16),
                                     Text(
-                                      '® Desenvolvido por Azape',
+                                      '® Desenvolvido por Pessin',
                                       style: TextStyle(
                                         fontFamily: 'NunitoSans',
                                         fontWeight: FontWeight.w400,
