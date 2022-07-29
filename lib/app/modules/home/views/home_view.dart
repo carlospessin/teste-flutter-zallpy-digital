@@ -1,12 +1,21 @@
-import 'package:az_proof/app/modules/home/views/widgets/principal_cards.dart';
+import 'dart:math';
+
+import 'package:az_proof/app/data/models/data_model.dart';
+import 'package:az_proof/app/modules/home/views/widgets/cards_resumo.dart';
+import 'package:az_proof/app/modules/home/views/widgets/table_data.dart';
+import 'package:az_proof/app/modules/home/views/widgets/card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
+import 'package:easy_mask/easy_mask.dart';
 
 class HomeView extends GetView<HomeController> {
+  final controller = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,12 +145,18 @@ class HomeView extends GetView<HomeController> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Resumo da atividade',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    PrincipalCards(),
+                                    Text('Resumo da atividade',
+                                        style: TextStyle(fontSize: 16)),
+                                    Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20),
+                                        child: CardsResumo()),
+                                    Text('Pedidos',
+                                        style: TextStyle(fontSize: 16)),
+                                    Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20),
+                                        child: TableData()),
                                   ],
                                 ),
                               ),
