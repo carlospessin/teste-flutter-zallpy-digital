@@ -9,6 +9,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TableData extends StatelessWidget {
   TableData({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class TableData extends StatelessWidget {
   HomeController controller = Get.find<HomeController>();
 
   Future<bool> getData() async {
-    await Future.delayed(const Duration(seconds: 2), () {});
+    await Future.delayed(const Duration(seconds: 5), () {});
     return true;
   }
 
@@ -28,10 +29,21 @@ class TableData extends StatelessWidget {
         if (s.hasData) {
           return DataTable(data: _data);
         } else {
-          return Center(child: CircularProgressIndicator());
+          return _shimmer();
         }
       },
     );
+  }
+
+    Shimmer _shimmer() {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Container(
+          height: 300,
+          width: double.infinity,
+          color: Colors.grey.shade300,
+        ));
   }
 }
 

@@ -22,6 +22,7 @@ dependencies:
   url_strategy: ^0.2.0
   syncfusion_flutter_datagrid: ^20.2.40
   easy_mask: ^2.0.1
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
