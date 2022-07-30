@@ -1,19 +1,21 @@
 import 'package:az_proof/app/modules/home/controllers/home_controller.dart';
-import 'package:az_proof/app/modules/home/views/widgets/card_item.dart';
-import 'package:az_proof/app/routes/app_pages.dart';
+import 'package:az_proof/app/modules/home/views/widgets/shimmer/shimmer_table.dart';
+import 'package:az_proof/app/modules/home/views/widgets/table/functions.dart';
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 
-class TableData extends StatelessWidget {
+class TableData extends StatefulWidget {
   TableData({Key? key}) : super(key: key);
+
+  @override
+  State<TableData> createState() => _TableDataState();
+}
+
+class _TableDataState extends State<TableData> {
   final DataTableSource _data = MyData();
+
   HomeController controller = Get.find<HomeController>();
 
   Future<bool> getData() async {
@@ -29,21 +31,10 @@ class TableData extends StatelessWidget {
         if (s.hasData) {
           return DataTable(data: _data);
         } else {
-          return _shimmer();
+          return ShimmerTable();
         }
       },
     );
-  }
-
-    Shimmer _shimmer() {
-    return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: Container(
-          height: 300,
-          width: double.infinity,
-          color: Colors.grey.shade300,
-        ));
   }
 }
 
@@ -79,8 +70,6 @@ class DataTable extends StatelessWidget {
             DataColumn(label: itemColumn('Método de pagamento')),
             DataColumn(label: itemColumn('Total')),
           ],
-          // columnSpacing: 100,
-          // horizontalMargin: 10,
           rowsPerPage: 6,
           showCheckboxColumn: false,
         ),
@@ -105,22 +94,26 @@ class MyData extends DataTableSource {
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    final order = controller.dataModel.value.orders![index];
+    final order = controller.dataModel.value.orders?[index];
 
     return DataRow.byIndex(
       index: index,
       cells: <DataCell>[
-        DataCell(itemCell(order.idOrder)),
-        DataCell(itemCell(order.idOrder)),
-        DataCell(itemCell('${formatter.format(order.createTime!)}')),
-        DataCell(itemCell(order.name)),
-        DataCell(itemCell(order.cpf!.length <= 11
-            ? maskCpf.getMaskedString(order.cpf.toString())
-            : maskCNPJ.getMaskedString(order.cpf.toString()))),
-        DataCell(itemCell(statusDoPedido(order.statusOrder))),
-        DataCell(itemCell(statusDoPagamento(order.statusPayment))),
-        DataCell(itemCell(metodoDePagamento(order.paymentMethod))),
-        DataCell(itemCell('R\$ ${order.total.toString()}')),
+        DataCell(itemCell(order?.idOrder ?? '')),
+        DataCell(itemCell(order?.idOrder ?? '')),
+        DataCell(itemCell(order != null 
+          ? '${formatter.format(order.createTime!)}'
+          : '')),
+        DataCell(itemCell(order?.name ?? '')),
+        DataCell(itemCell(order != null 
+            ? order.cpf!.length >= 11 
+              ? maskCpf.getMaskedString(order.cpf.toString())
+              : maskCNPJ.getMaskedString(order.cpf.toString())
+            : '')),
+        DataCell(itemCell(statusDoPedido(order?.statusOrder) ?? '')),
+        DataCell(itemCell(statusDoPagamento(order?.statusPayment) ?? '')),
+        DataCell(itemCell(metodoDePagamento(order?.paymentMethod) ?? '')),
+        DataCell(itemCell('R\$ ${order?.total ?? ""}')),
       ],
     );
   }
@@ -132,45 +125,6 @@ Text itemCell(item) =>
 Text itemColumn(item) =>
     Text('${item}', style: TextStyle(fontWeight: FontWeight.bold));
 
-statusDoPedido(status) {
-  switch (status) {
-    case 'paid':
-      return 'Pago';
-    case 'canceled':
-      return 'Cancelado';
-    case 'pending':
-      return 'Pendente';
-    default:
-      return 'status não definido';
-  }
-}
 
-statusDoPagamento(status) {
-  switch (status) {
-    case 'succeeded':
-      return 'Aprovado';
-    case 'pending':
-      return 'Pendente';
-    case 'Aprovada':
-      return 'Aprovado';
-    default:
-      return 'status não definido';
-  }
-}
 
-metodoDePagamento(status) {
-  switch (status) {
-    case 'pix':
-      return 'Pix';
-    case 'PIX':
-      return 'Pix';
-    case 'credit':
-      return 'Crédito à vista';
-    case 'credit_installments':
-      return 'Crédito à prazo';
-    case 'boleto':
-      return 'Boleto';
-    default:
-      return 'status não definido';
-  }
-}
+

@@ -1,9 +1,7 @@
 import 'package:az_proof/app/data/models/data_model.dart';
 import 'package:az_proof/app/data/preferences/user_preferences.dart';
 import 'package:az_proof/app/data/providers/data_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   DataProvider dataProvider;

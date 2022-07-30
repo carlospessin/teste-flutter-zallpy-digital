@@ -1,23 +1,25 @@
-import 'dart:math';
-
-import 'package:az_proof/app/data/models/data_model.dart';
-import 'package:az_proof/app/modules/home/views/widgets/cards_resumo.dart';
-import 'package:az_proof/app/modules/home/views/widgets/table_data.dart';
-import 'package:az_proof/app/modules/home/views/widgets/card_item.dart';
+import 'package:az_proof/app/data/providers/data_provider.dart';
+import 'package:az_proof/app/modules/home/controllers/home_controller.dart';
+import 'package:az_proof/app/modules/home/views/widgets/cards/cards_resumo.dart';
+import 'package:az_proof/app/modules/home/views/widgets/table/table_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../../../routes/app_pages.dart';
-import '../controllers/home_controller.dart';
-import 'package:easy_mask/easy_mask.dart';
+
 
 class HomeView extends GetView<HomeController> {
   final controller = Get.find<HomeController>();
 
+  void dependencies() {
+    DataProvider sessionProvider = DataProvider();
+    Get.lazyPut<HomeController>(() => HomeController(sessionProvider));
+  }
+
   @override
   Widget build(BuildContext context) {
+    dependencies();
     return Scaffold(
       drawer: Drawer(
         backgroundColor: Colors.white,
@@ -123,79 +125,93 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 5,
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 25,
-                                  horizontal: 40,
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    HomeView()), // this mainpage is your page to refresh
+            (Route<dynamic> route) => false,
+          );
+        },
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 25,
+                                    horizontal: 40,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Resumo da atividade',
+                                          style: TextStyle(fontSize: 16)),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: CardsResumo(
+                                            controller: controller,
+                                          )),
+                                      Text('Pedidos',
+                                          style: TextStyle(fontSize: 16)),
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: TableData()),
+                                    ],
+                                  ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Resumo da atividade',
-                                        style: TextStyle(fontSize: 16)),
-                                    Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        child: CardsResumo()),
-                                    Text('Pedidos',
-                                        style: TextStyle(fontSize: 16)),
-                                    Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        child: TableData()),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Color(0xffF5F5F5),
-                                height: 58,
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(vertical: 21),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/logo_azape.svg',
-                                      width: 30,
-                                      height: 30,
-                                    ),
-                                    SizedBox(width: 16),
-                                    Text(
-                                      '® Desenvolvido por Pessin',
-                                      style: TextStyle(
-                                        fontFamily: 'NunitoSans',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: Color(0xFF97A1A8),
+                                Container(
+                                  color: Color(0xffF5F5F5),
+                                  height: 58,
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(vertical: 21),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/logo_azape.svg',
+                                        width: 30,
+                                        height: 30,
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(width: 16),
+                                      Text(
+                                        '® Desenvolvido por Pessin',
+                                        style: TextStyle(
+                                          fontFamily: 'NunitoSans',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Color(0xFF97A1A8),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

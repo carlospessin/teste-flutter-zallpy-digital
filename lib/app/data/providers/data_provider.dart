@@ -22,7 +22,7 @@ class DataProvider {
       );
 
       if (response.statusCode == 200) {
-        var data = DataModel.fromJson(response.data);
+        var data = await DataModel.fromJson(response.data);
 
         return data;
       }

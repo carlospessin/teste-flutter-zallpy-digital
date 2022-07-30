@@ -1,25 +1,21 @@
 import 'package:az_proof/app/modules/home/controllers/home_controller.dart';
-import 'package:az_proof/app/modules/home/views/widgets/card_item.dart';
+import 'package:az_proof/app/modules/home/views/widgets/cards/card_item.dart';
+import 'package:az_proof/app/modules/home/views/widgets/shimmer/shimmer_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CardsResumo extends StatelessWidget {
-  CardsResumo({Key? key}) : super(key: key);
-  HomeController controller = Get.find<HomeController>();
+  CardsResumo({Key? key, required this.controller}) : super(key: key);
+  final HomeController controller;
 
   Future<bool> getData() async {
-    late bool loading;
-    await Future.delayed(const Duration(seconds: 5), () {
-      loading = true;
-    });
-    return loading;
+    await Future.delayed(const Duration(seconds: 5), () {});
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
+    return FutureBuilder(
       future: getData(),
       builder: (c, s) {
         if (s.hasData) {
@@ -29,26 +25,15 @@ class CardsResumo extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _shimmer(),
+                ShimmerCard(),
                 const SizedBox(width: 10),
-                _shimmer(),
+                ShimmerCard(),
               ],
             ),
           );
         }
       },
     );
-  }
-
-  Shimmer _shimmer() {
-    return Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: Container(
-          height: 120,
-          width: 180,
-          color: Colors.grey.shade300,
-        ));
   }
 }
 
