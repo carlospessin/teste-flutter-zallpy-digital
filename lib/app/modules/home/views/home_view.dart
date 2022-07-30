@@ -8,7 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../routes/app_pages.dart';
 
-
 class HomeView extends GetView<HomeController> {
   final controller = Get.find<HomeController>();
 
@@ -39,32 +38,60 @@ class HomeView extends GetView<HomeController> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: ListTile(
-                  textColor: Color(0xFF8F95B2),
-                  iconColor: Color(0xFF8F95B2),
-                  selected: true,
-                  selectedColor: Colors.white,
-                  selectedTileColor: Color(0xFFFE7C6E),
-                  horizontalTitleGap: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(
-                      color: Color(0xFFF5F5F5),
-                    ),
-                  ),
-                  leading: SvgPicture.asset(
-                    'assets/images/home.svg',
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      fontFamily: 'NunitoSans',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  onTap: () => Get.offAndToNamed(Routes.HOME)),
+              child: Column(
+                children: [
+                  ListTile(
+                      textColor: Color(0xFF8F95B2),
+                      iconColor: Color(0xFF8F95B2),
+                      selected: true,
+                      selectedColor: Colors.white,
+                      selectedTileColor: Color(0xFFFE7C6E),
+                      horizontalTitleGap: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: Color(0xFFF5F5F5),
+                        ),
+                      ),
+                      leading: SvgPicture.asset(
+                        'assets/images/home.svg',
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Dashboard',
+                        style: TextStyle(
+                          fontFamily: 'NunitoSans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onTap: () => Get.offAndToNamed(Routes.HOME)),
+                  const SizedBox(height: 10),
+                  ListTile(
+                      textColor: Color(0xFF8F95B2),
+                      iconColor: Color(0xFF8F95B2),
+                      selected: true,
+                      selectedColor: Colors.white,
+                      selectedTileColor: Color(0xFFFE7C6E),
+                      horizontalTitleGap: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: Color(0xFFF5F5F5),
+                        ),
+                      ),
+                      leading: Icon(Icons.exit_to_app, color: Colors.white),
+                      title: Text(
+                        'Sair',
+                        style: TextStyle(
+                          fontFamily: 'NunitoSans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onTap: () => Get.offAndToNamed(Routes.LOGIN)),
+                ],
+              ),
             )
           ],
         ),
