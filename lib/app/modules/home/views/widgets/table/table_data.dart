@@ -99,16 +99,15 @@ class MyData extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: <DataCell>[
-        DataCell(itemCell(order?.idOrder ?? '')),
-        DataCell(itemCell(order?.idOrder ?? '')),
-        DataCell(itemCell(order != null 
-          ? '${formatter.format(order.createTime!)}'
-          : '')),
+        DataCell(itemCell('#${order?.idOrder ?? ""}')),
+        DataCell(itemCell('#${order?.idOrder ?? ""}')),
+        DataCell(itemCell(
+            order != null ? '${formatter.format(order.createTime!)}' : '')),
         DataCell(itemCell(order?.name ?? '')),
-        DataCell(itemCell(order != null 
-            ? order.cpf!.length >= 11 
-              ? maskCpf.getMaskedString(order.cpf.toString())
-              : maskCNPJ.getMaskedString(order.cpf.toString())
+        DataCell(itemCell(order != null
+            ? order.cpf!.length >= 11
+                ? maskCpf.getMaskedString(order.cpf.toString())
+                : maskCNPJ.getMaskedString(order.cpf.toString())
             : '')),
         DataCell(itemCell(statusDoPedido(order?.statusOrder) ?? '')),
         DataCell(itemCell(statusDoPagamento(order?.statusPayment) ?? '')),
@@ -124,7 +123,3 @@ Text itemCell(item) =>
 
 Text itemColumn(item) =>
     Text('${item}', style: TextStyle(fontWeight: FontWeight.bold));
-
-
-
-
