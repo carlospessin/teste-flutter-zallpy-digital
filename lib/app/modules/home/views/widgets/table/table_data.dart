@@ -105,7 +105,7 @@ class MyData extends DataTableSource {
             order != null ? '${formatter.format(order.createTime!)}' : '')),
         DataCell(itemCell(order?.name ?? '')),
         DataCell(itemCell(order != null
-            ? order.cpf!.length >= 11
+            ? order.cpf!.length <= 11
                 ? maskCpf.getMaskedString(order.cpf.toString())
                 : maskCNPJ.getMaskedString(order.cpf.toString())
             : '')),
