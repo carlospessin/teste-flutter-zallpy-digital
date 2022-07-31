@@ -9,10 +9,17 @@ Projeto em Flutter desenvolvido para teste.
 
 ## Observações
 
-Em minha versão do flutter foi necessário adicionar `WidgetsFlutterBinding.ensureInitialized();` logo após a Main() para que o projeto funcionasse.
-Se caso o projeto não abra em sua máquina remova essa linha.
+*Em minha versão do Flutter foi necessário adicionar `WidgetsFlutterBinding.ensureInitialized();` logo após a **Main()** para que o projeto funcionasse.  
+:warning: Se caso o projeto não abra em sua máquina remova essa linha.*
 
-Adaptei diversos widgets para o ambiente Mobile, tentando ser fiel as requisições da prova.
+## Implementações
+
+:bulb: Escondi a **Dashboard** dentro do ***Drawer***.   
+:bulb: Realoquei as informações do usuário para dentro da ***NavBar*** para melhor adaptação do conteúdo.  
+:bulb: Implementei um efeito ***Shimmer*** enquanto os dados são carregados.   
+:bulb: Para atualizar os dados exibidos deslize o dedo do topo para baixo dentro da área de conteúdo.  
+:bulb: Adicionei o botão ***"Sair"*** na **Dashboard** apenas para facilitar a navegação entre as telas. (sem exclusão de token)
+
 
 ## Getting Started
 
