@@ -153,12 +153,11 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       body: RefreshIndicator(
+        color: Color(0xFFFE877A),
         onRefresh: () {
           return Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    HomeView()), // this mainpage is your page to refresh
+            MaterialPageRoute(builder: (context) => HomeView()),
             (Route<dynamic> route) => false,
           );
         },
